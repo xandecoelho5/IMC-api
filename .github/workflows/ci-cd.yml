@@ -3,6 +3,8 @@ name: CI/CD Pipeline
 on:
   push:
     branches: [ main ]
+    tags:
+      - 'v*'
   pull_request:
     branches: [ main ]
 
@@ -60,20 +62,29 @@ jobs:
           name: jacoco-report
           path: target/site/jacoco/
 
-  deploy:
+  create-release:
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      contents: write
 
     steps:
-      # Passo 10: Download dos artefatos
+      # Passo 10: Checkout para release
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      
+      # Passo 11: Download do artefato para release
       - name: Download Build Artifacts
         uses: actions/download-artifact@v4
         with:
           name: IMC-api
-
-      # Passo 11: Deploy simulado (como exemplo)
-      - name: Deploy to Production
-        run: |
-          echo "Preparando para deploy da aplicação"
-          echo "Simulação de deploy da aplicação concluída com sucesso!"
+          path: target
+          
+      # Passo 12: Criar GitHub Release
+      - name: Create Release
+        uses: Shopify/upload-to-release@v2
+        with:
+          name: Release ${{ github.ref_name }}
+          path: target/*.jar
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
