@@ -86,5 +86,5 @@ jobs:
         uses: Shopify/upload-to-release@v2
         with:
           name: Release ${{ github.ref_name }}
-          path: target/*.jar
+          path: target
           repo-token: ${{ secrets.TOKEN }}
