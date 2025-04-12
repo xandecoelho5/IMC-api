@@ -1,0 +1,79 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Passo 1: Checkout do código
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Passo 2: Configuração do JDK
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      # Passo 3: Verificação de linting (Checkstyle)
+      - name: Lint Check
+        run: mvn checkstyle:check
+
+      # Passo 4: Testes unitários
+      - name: Unit Tests
+        run: mvn test
+
+      # Passo 5: Análise de cobertura de código
+      - name: Code Coverage
+        run: mvn jacoco:report
+
+      # Passo 6: Build do projeto
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml -DskipTests
+
+      # Passo 7: Upload dos artefatos
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: IMC-api
+          path: target/*.jar
+
+      # Passo 8: Gerar relatório de cobertura
+      - name: Generate JaCoCo Badge
+        uses: cicirello/jacoco-badge-generator@v2
+        with:
+          generate-branches-badge: true
+          jacoco-csv-file: target/site/jacoco/jacoco.csv
+
+      # Passo 9: Upload do relatório de cobertura
+      - name: Upload JaCoCo coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: jacoco-report
+          path: target/site/jacoco/
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      # Passo 10: Download dos artefatos
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: IMC-api
+
+      # Passo 11: Deploy simulado (como exemplo)
+      - name: Deploy to Production
+        run: |
+          echo "Preparando para deploy da aplicação"
+          echo "Simulação de deploy da aplicação concluída com sucesso!"
