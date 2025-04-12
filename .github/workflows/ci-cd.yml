@@ -87,4 +87,4 @@ jobs:
         with:
           name: Release ${{ github.ref_name }}
           path: target/*.jar
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.TOKEN }}
