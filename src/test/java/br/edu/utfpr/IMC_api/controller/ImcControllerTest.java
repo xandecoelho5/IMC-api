@@ -31,13 +31,11 @@ class ImcControllerTest {
 
     @Test
     void shouldCalculateImc() throws Exception {
-        // given
         Person person = new Person(70.0, 1.75);
         ImcResult imcResult = new ImcResult(22.86, "Peso normal");
 
         when(imcService.calculateImc(any(Person.class))).thenReturn(imcResult);
 
-        // when & then
         mockMvc.perform(post("/api/imc/calculate")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(person)))
@@ -48,10 +46,8 @@ class ImcControllerTest {
 
     @Test
     void shouldReturnBadRequestWhenWeightIsNull() throws Exception {
-        // given
         Person person = new Person(null, 1.75);
 
-        // when & then
         mockMvc.perform(post("/api/imc/calculate")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(person)))
@@ -60,10 +56,8 @@ class ImcControllerTest {
 
     @Test
     void shouldReturnBadRequestWhenHeightIsNull() throws Exception {
-        // given
         Person person = new Person(70.0, null);
 
-        // when & then
         mockMvc.perform(post("/api/imc/calculate")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(person)))

@@ -4,9 +4,6 @@ public class ImcResult {
     private Double imc;
     private String classification;
 
-    public ImcResult() {
-    }
-
     public ImcResult(Double imc, String classification) {
         this.imc = imc;
         this.classification = classification;

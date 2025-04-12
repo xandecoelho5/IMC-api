@@ -21,52 +21,37 @@ class ImcServiceTest {
 
     @Test
     void shouldCalculateImcCorrectly() {
-        // given
         Person person = new Person(70.0, 1.75);
 
-        // when
         ImcResult result = imcService.calculateImc(person);
 
-        // then
         assertEquals(22.86, result.getImc());
         assertEquals("Peso normal", result.getClassification());
     }
 
     @Test
     void shouldThrowExceptionWhenPersonIsNull() {
-        // given
         Person person = null;
 
-        // when & then
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            imcService.calculateImc(person);
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> imcService.calculateImc(person));
 
         assertEquals("Pessoa, peso e altura não podem ser nulos", exception.getMessage());
     }
 
     @Test
     void shouldThrowExceptionWhenWeightIsNull() {
-        // given
         Person person = new Person(null, 1.75);
 
-        // when & then
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            imcService.calculateImc(person);
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> imcService.calculateImc(person));
 
         assertEquals("Pessoa, peso e altura não podem ser nulos", exception.getMessage());
     }
 
     @Test
     void shouldThrowExceptionWhenHeightIsNull() {
-        // given
         Person person = new Person(70.0, null);
 
-        // when & then
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            imcService.calculateImc(person);
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> imcService.calculateImc(person));
 
         assertEquals("Pessoa, peso e altura não podem ser nulos", exception.getMessage());
     }
@@ -87,10 +72,8 @@ class ImcServiceTest {
             "45.0, Obesidade Grau III"
     })
     void shouldClassifyImcCorrectly(double imc, String expectedClassification) {
-        // when
         String classification = imcService.classifyImc(imc);
 
-        // then
         assertEquals(expectedClassification, classification);
     }
 }

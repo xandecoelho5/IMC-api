@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ImcService {
-
     public ImcResult calculateImc(Person person) {
         if (person == null || person.getWeight() == null || person.getHeight() == null) {
             throw new IllegalArgumentException("Pessoa, peso e altura não podem ser nulos");
