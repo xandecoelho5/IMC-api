@@ -71,7 +71,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.TOKEN }}
-          file: ./target/*.jar
+          file: ./*.jar
           asset_name: IMC_API.jar
           tag: ${{ github.ref }}
           overwrite: true
