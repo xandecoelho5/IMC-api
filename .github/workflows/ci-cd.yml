@@ -3,8 +3,6 @@ name: CI/CD Pipeline
 on:
   push:
     branches: [ main ]
-    tags:
-      - 'v*'
   pull_request:
     branches: [ main ]
 
@@ -35,44 +33,26 @@ jobs:
       - name: Build com Maven
         run: mvn -B package --file pom.xml -DskipTests
 
-      - name: Faz o upload dos artefatos da build
-        uses: actions/upload-artifact@v4
-        with:
-          name: IMC-api
-          path: target/*.jar
-
       - name: Gera o relatório de cobertura
         uses: cicirello/jacoco-badge-generator@v2
         with:
           generate-branches-badge: true
           jacoco-csv-file: target/site/jacoco/jacoco.csv
 
-      - name: Faz o upload do relatório de coberturas do JaCoCo
-        uses: actions/upload-artifact@v4
-        with:
-          name: jacoco-report
-          path: target/site/jacoco/
-
-  create-release:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Faz o checkout
-        uses: actions/checkout@v4
-      
-      - name: Faz o download dos artefatos
-        uses: actions/download-artifact@v4
-        with:
-          name: IMC-api
-          path: target
-          
       - name: Faz o upload pra release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.TOKEN }}
-          file: ./*.jar
+          file: target/*.jar
           asset_name: IMC_API.jar
           tag: ${{ github.ref }}
           overwrite: true
-          body: "Arquivo jar contendo uma API de IMC"
+          body: "Arquivo jar contendo uma API de IMC"          
+
+      # - name: Faz o upload do relatório de coberturas do JaCoCo
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: jacoco-report
+      #     path: target/site/jacoco/
+          
+
