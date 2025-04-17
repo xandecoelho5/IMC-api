@@ -11,7 +11,7 @@
 
 	<groupId>br.edu.utfpr</groupId>
 	<artifactId>IMC-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>IMC-api</name>
 	<description>API básica pra IMC</description>
 
