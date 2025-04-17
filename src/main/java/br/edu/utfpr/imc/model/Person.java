@@ -1,4 +1,4 @@
-package br.edu.utfpr.IMC_api.model;
+package br.edu.utfpr.imc.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

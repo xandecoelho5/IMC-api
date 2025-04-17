@@ -1,8 +1,8 @@
-package br.edu.utfpr.IMC_api.controller;
+package br.edu.utfpr.imc.controller;
 
-import br.edu.utfpr.IMC_api.dto.ImcResult;
-import br.edu.utfpr.IMC_api.model.Person;
-import br.edu.utfpr.IMC_api.service.ImcService;
+import br.edu.utfpr.imc.dto.ImcResult;
+import br.edu.utfpr.imc.model.Person;
+import br.edu.utfpr.imc.service.ImcService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

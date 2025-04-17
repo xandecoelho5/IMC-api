@@ -1,10 +1,10 @@
-package br.edu.utfpr.IMC_api;
+package br.edu.utfpr.imc;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ImcApiApplicationTests {
+class ImcApplicationTests {
 
 	@Test
 	void contextLoads() {
